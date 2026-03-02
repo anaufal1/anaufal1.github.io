@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Detik ke 16:00 WIB</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        #detik {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums; /* Agar angka tidak bergeser */
+        }
+        .label {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="detik">...</div>
+        <div class="label" id="label-text">detik menuju pukul 16:00 WIB</div>
+    </div>
+
+    <script>
+        function updateDetik() {
+            const sekarang = new Date();
+            
+            // Set target ke hari ini pukul 16:00:00 (Sistem akan mengikuti zona waktu komputermu, yaitu WIB)
+            const target = new Date();
+            target.setHours(16, 0, 0, 0);
+
+            // Hitung selisih dalam milidetik
+            const selisih = target.getTime() - sekarang.getTime();
+            const elemenDetik = document.getElementById('detik');
+            const elemenLabel = document.getElementById('label-text');
+
+            if (selisih > 0) {
+                // Ubah milidetik menjadi detik murni
+                const sisaDetik = Math.floor(selisih / 1000);
+                elemenDetik.innerText = sisaDetik;
+            } else {
+                // Jika waktu saat ini sudah melewati jam 16:00
+                elemenDetik.innerText = "0";
+                elemenLabel.innerText = "Waktu sudah melewati pukul 16:00 WIB hari ini.";
+            }
+        }
+
+        // Update setiap 1000 milidetik (1 detik)
+        setInterval(updateDetik, 1000);
+        
+        // Panggil fungsi segera agar tidak ada delay saat halaman pertama dimuat
+        updateDetik();
+    </script>
+
+</body>
+</html>
